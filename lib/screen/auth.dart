@@ -1,8 +1,8 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:chat_app/widgets/user_image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:image_picker/image_picker.dart';
@@ -25,15 +25,17 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
   var _enteredUsername = '';
-  File? _selectedImage;
+  // File? _selectedImage;
   var _isAuthenticating = false;
 
   void _submit() async {
-    final isValid = _form.currentState!.validate();
+    // final isValid = _form.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
-      return;
-    }
+    // if (!isValid || !_isLogin
+    // // && _selectedImage == null
+    // ) {
+    //   return;
+    // }
 
     _form.currentState!.save();
 
@@ -53,13 +55,13 @@ class _AuthScreenState extends State<AuthScreen> {
           password: _enteredPassword,
         );
 
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${userCredentials.user!.uid}.jpg');
+        // final storageRef = FirebaseStorage.instance
+        //     .ref()
+        //     .child('user_images')
+        //     .child('${userCredentials.user!.uid}.jpg');
 
-        await storageRef.putFile(_selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
+        // await storageRef.putFile(_selectedImage!);
+        // final imageUrl = await storageRef.getDownloadURL();
 
         await FirebaseFirestore.instance
             .collection('users')
@@ -67,7 +69,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .set({
               'username': _enteredUsername,
               'email': _enteredEmail,
-              'image_url': imageUrl,
+              'image_url': 'imageUrl',
             });
       }
     } on FirebaseAuthException catch (error) {
@@ -78,9 +80,9 @@ class _AuthScreenState extends State<AuthScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.message ?? 'Authentication failed')),
       );
-      // setState(() {
-      //   _isAuthenticating = false;
-      // });
+      setState(() {
+        _isAuthenticating = false;
+      });
     }
   }
 
@@ -116,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           if (!_isLogin)
                             UserImagePicker(
                               onPickImage: (pickedImage) {
-                                _selectedImage = pickedImage;
+                                // _selectedImage = pickedImage;
                               },
                             ),
 
